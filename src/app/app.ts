@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {SaveCardComponent} from './components/save-card/save-card.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SaveCardComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
