@@ -2,10 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>IntegrateTapPayment</title>
+  <title>Secure Angular App</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Content Security Policy (CSP) -->
+  <!-- 
+    IMPORTANT: This is a meta tag CSP. For production, set CSP via HTTP headers on the server.
+    Server headers override meta tags and provide better security.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 
+      'unsafe-inline' 
+      https://tap-sdks.b-cdn.net 
+      https://*.tap.company 
+      https://*.googleapis.com 
+      https://*.gstatic.com
+      https://www.googletagmanager.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https: blob:;
+    connect-src 'self' 
+      https://*.firebaseapp.com 
+      https://*.googleapis.com 
+      https://*.gstatic.com
+      https://*.tap.company
+      https://sdk.tap.company
+      https://sdk.beta.tap.company
+      https://*.firebaseio.com
+      wss://*.firebaseio.com;
+    frame-src 'self' 
+      https://*.tap.company
+      https://*.googleapis.com;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    upgrade-insecure-requests;
+  ">
+  
+  <!-- Additional Security Headers (set on server in production) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(self), camera=(), microphone=()">
+  
+  <!-- Tap Payments SDK -->
   <script src="https://tap-sdks.b-cdn.net/card/1.0.2/index.js"></script>
 </head>
 <body>

@@ -1,0 +1,63 @@
+<div class="max-w-4xl mx-auto mt-8 p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Payment Methods</h2>
+    <a
+      routerLink="/payments/new"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+    >
+      Add New Card
+    </a>
+  </div>
+
+  @if (errorMessage(); as error) {
+    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <p class="text-sm text-red-800">{{ error }}</p>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <app-loading-spinner />
+  } @else if (payments().length === 0) {
+    <div class="text-center py-12 bg-white rounded-lg shadow">
+      <p class="text-gray-500 mb-4">No payment methods saved yet.</p>
+      <a
+        routerLink="/payments/new"
+        class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium"
+      >
+        Add Your First Card
+      </a>
+    </div>
+  } @else {
+    <div class="space-y-4">
+      @for (payment of payments(); track payment.tokenId) {
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-gray-800">
+                {{ getCardDisplayName(payment) }}
+              </h3>
+              @if (payment.cardholderName) {
+                <p class="text-sm text-gray-600 mt-1">{{ payment.cardholderName }}</p>
+              }
+              <div class="mt-2 flex items-center space-x-4 text-sm text-gray-500">
+                <span>Expires: {{ getExpiryDisplay(payment) }}</span>
+                @if (payment.createdAt) {
+                  <span>Added: {{ payment.createdAt | date: 'shortDate' }}</span>
+                }
+              </div>
+              <p class="text-xs text-gray-400 mt-2">
+                Token ID: {{ payment.tokenId.substring(0, 20) }}...
+              </p>
+            </div>
+            <button
+              (click)="deletePayment(payment)"
+              class="ml-4 text-red-600 hover:text-red-800 text-sm font-medium"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
